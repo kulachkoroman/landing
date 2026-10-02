@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kulachko Roman — SMM · Дизайн · Автоматизация</title>
+<meta name="description" content="SMM-специалист и графический дизайнер из Нячанга. Соцсети, Reels, визуал — и автоматизация рутины через ботов и мини-приложения в Telegram.">
+<script>
+  // тема ставится до отрисовки, чтобы страница не мигала
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (t !== 'light' && t !== 'dark') {
+      t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    document.documentElement.dataset.theme = t;
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230a84ff'/%3E%3Ctext x='32' y='44' font-family='Arial' font-weight='700' font-size='34' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/vendor/lenis.min.js" defer></script>
+<script src="js/main.js" defer></script>
+</head>
+<body>
+
+<!-- Живой фон: сетка точек -->
+<canvas class="dots" id="dots" aria-hidden="true"></canvas>
+
+<!-- Иконки -->
+<svg class="sprite" xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.7-.9 1.2-1.8-.3-.6-.1-1.4.6-1.6l1.6-.5c1.9-.6 3.1-2.4 2.8-4.4C17.7 8.1 15.2 5 12 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor"/><circle cx="9.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="14" cy="7.5" r="1.2" fill="currentColor"/></symbol>
+  <symbol id="icon-briefcase" viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5M3 12.5h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="icon-layers" viewBox="0 0 24 24"><path d="M12 3l8.5 4.5L12 12 3.5 7.5 12 3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3.5 12.5L12 17l8.5-4.5M3.5 16.5L12 21l8.5-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+  <symbol id="icon-music" viewBox="0 0 24 24"><path d="M9 18V5.5L20 3v12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="15.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="icon-bolt" viewBox="0 0 24 24"><path d="M13 3L5 13.5h5.5L11 21l8-10.5h-5.5L13 3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.2 8.8l6 3.2-6 3.2V8.8z" fill="currentColor"/></symbol>
+  <symbol id="icon-sound-off" viewBox="0 0 24 24"><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" fill="currentColor"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <!-- инструменты «фоторедактора» в кейсе НячангGO -->
+  <symbol id="icon-tool-move" viewBox="0 0 24 24"><path d="M6 3.5l12 7.2-5.4 1.4L9.8 17.6z" fill="currentColor"/></symbol>
+  <symbol id="icon-tool-marquee" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2.4"/></symbol>
+  <symbol id="icon-tool-pen" viewBox="0 0 24 24"><path d="M12 3l5.5 9.5L12 21l-5.5-8.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12.5" r="1.6" fill="currentColor"/></symbol>
+  <symbol id="icon-tool-type" viewBox="0 0 24 24"><path d="M5 5.5h14M12 5.5v13M9 18.5h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="icon-tool-shape" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="10" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="15.5" cy="15.5" r="4.5" fill="currentColor" opacity=".55"/></symbol>
+  <symbol id="icon-tool-hand" viewBox="0 0 24 24"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V10m0-5.5a1.5 1.5 0 0 1 3 0V10m0-4a1.5 1.5 0 0 1 3 0v6.5c0 4-2.5 7-6.5 7-2.6 0-4-1.4-5.4-3.6L4 13.2a1.4 1.4 0 0 1 2.3-1.6L8 13.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.8" fill="currentColor"/></symbol>
+  <symbol id="icon-sound-on" viewBox="0 0 24 24"><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18.3 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="icon-quote" viewBox="0 0 24 24"><path d="M7.5 8C5.6 8 4 9.6 4 11.5S5.6 15 7.5 15c.3 2-1 3.5-3 4v1.5c3.3-.4 5.5-2.7 5.5-6V11.5C10 9.6 8.4 8 7.5 8zM16.5 8c-1.9 0-3.5 1.6-3.5 3.5s1.6 3.5 3.5 3.5c.3 2-1 3.5-3 4v1.5c3.3-.4 5.5-2.7 5.5-6V11.5c0-1.9-1.6-3.5-2.5-3.5z" fill="currentColor"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="icon-diploma" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M7 20l2-3M17 20l-2-3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M7 8h10M7 11.5h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="icon-send" viewBox="0 0 24 24"><path d="M4 12.5L20 4l-6.5 16-3-6.5L4 12.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 20c1.4-3.6 4.3-5.5 7.5-5.5s6.1 1.9 7.5 5.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="icon-sparkle" viewBox="0 0 24 24"><path d="M12 3c.9 4.2 2.2 5.9 6.5 6.8-4.3.9-5.6 2.6-6.5 6.8-.9-4.2-2.2-5.9-6.5-6.8C9.8 8.9 11.1 7.2 12 3z" fill="currentColor"/><path d="M19 16c.4 1.7.9 2.3 2.6 2.7-1.7.4-2.2.9-2.6 2.6-.4-1.7-.9-2.2-2.6-2.6 1.7-.4 2.2-1 2.6-2.7z" fill="currentColor"/></symbol>
+  <symbol id="icon-megaphone" viewBox="0 0 24 24"><path d="M3 10.5v3a1 1 0 0 0 1 1h1.4l1.1 4h2l-1-4H9l9 3.5v-13L9 8.5H4a1 1 0 0 0-1 1z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M18 9.5a4 4 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="icon-crown" viewBox="0 0 24 24"><path d="M4 18.5h16l1.2-10-5.4 3.6L12 5.5l-3.8 6.6-5.4-3.6L4 18.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+  <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4.5 4 3.5 3-2.5 4.5 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-bell" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15l1.5-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 20.5a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="icon-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="icon-file" viewBox="0 0 24 24"><path d="M7 3.5h7l4.5 4.5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-15.5a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 3.5V8h4.5M9 13h6M9 16.5h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="icon-browser" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="6.8" r=".9" fill="currentColor"/><circle cx="8.8" cy="6.8" r=".9" fill="currentColor"/><path d="M7 13h6M7 16h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="icon-expand" viewBox="0 0 24 24"><path d="M14 4.5h5.5V10M10 19.5H4.5V14M19.5 4.5L13.5 10.5M4.5 19.5l6-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="icon-cookie" viewBox="0 0 24 24"><path d="M20.6 12.4a8.6 8.6 0 1 1-9-8.9 3 3 0 0 0 3.5 3.6 3 3 0 0 0 3.6 3.5 3 3 0 0 0 1.9 1.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="8.6" cy="10.2" r="1.2" fill="currentColor"/><circle cx="12.6" cy="15.6" r="1.2" fill="currentColor"/><circle cx="7.9" cy="15.2" r=".9" fill="currentColor"/><circle cx="15.8" cy="12.6" r=".9" fill="currentColor"/></symbol>
+  <symbol id="icon-loop" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 0 1-13.7 5.6L4 15.5M4 20v-4.5h4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="#hero">
+      <b>Kulachko Roman<span>.</span></b>
+      <small>SMM · дизайн · автоматизация</small>
+    </a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#about" data-nav-link>Обо мне</a>
+      <a href="#automation" data-nav-link>Автоматизация</a>
+      <a href="#cases" data-nav-link>Кейсы</a>
+      <a href="#services" data-nav-link>Услуги</a>
+      <a href="#portfolio" data-nav-link>Работы</a>
+      <a href="#contact" data-nav-link>Связь</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="nav__icon-btn" id="themeToggle" type="button" aria-label="Переключить тему">
+        <svg class="theme-icon theme-icon--sun" width="18" height="18"><use href="#icon-sun"/></svg>
+        <svg class="theme-icon theme-icon--moon" width="18" height="18"><use href="#icon-moon"/></svg>
+      </button>
+      <a class="nav__cta" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer" data-magnetic>
+        <svg width="15" height="15"><use href="#icon-send"/></svg>
+        <span>Написать</span>
+      </a>
+      <button class="nav__icon-btn nav__burger" id="navBurger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="navLinks">
+        <svg width="20" height="20"><use href="#icon-menu"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ГЛАВНЫЙ ЭКРАН -->
+  <section id="hero" class="hero">
+    <div class="hero__inner" data-hero-parallax>
+      <div class="hero__top" data-reveal>
+        <p class="hero__tag">FREELANCE · АЗИЯ</p>
+        <!-- ЗАНЯТОСТЬ: поменять число; при двух — «Заняты <b>2</b> слота из 3», при трёх — «Заняты <b>3</b> слота из 3» -->
+        <a class="slots" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer" aria-label="Занят 1 слот из 3 — написать в Telegram">
+          <img class="slots__avatar" src="assets/avatar.webp" alt="" width="34" height="34">
+          <span class="slots__text">Занят <b>1</b> слот из 3</span>
+          <span class="slots__dot" aria-hidden="true"></span>
+        </a>
+      </div>
+      <h1 class="hero__title">
+        <span class="reveal-line"><span data-reveal-line><span class="accent">СММ.</span></span></span>
+        <span class="reveal-line"><span data-reveal-line>Контент-мейкер.</span></span>
+        <span class="reveal-line"><span data-reveal-line>Графический дизайнер.</span></span>
+        <span class="reveal-line"><span data-reveal-line>Работа с <span class="accent">ИИ</span>.</span></span>
+        <span class="reveal-line"><span data-reveal-line><span class="hl">Автоматизация.</span></span></span>
+      </h1>
+      <p class="hero__lead" data-reveal>Веду соцсети, делаю Reels и дизайн. А ещё собираю ботов и мини-приложения в Telegram, которые забирают рутину: напоминания, учёт оплат, отчёты.</p>
+      <div class="hero__actions" data-reveal>
+        <a class="btn-primary" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer" data-magnetic>
+          <svg width="17" height="17"><use href="#icon-send"/></svg>
+          Написать в Telegram
+        </a>
+        <a class="btn-ghost" href="#cases">
+          Смотреть кейсы
+          <svg class="btn-arrow" width="16" height="16"><use href="#icon-arrow"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero__cue" aria-hidden="true">
+      <svg width="22" height="22"><use href="#icon-chevron"/></svg>
+    </div>
+  </section>
+
+  <!-- БЕГУЩАЯ СТРОКА -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>SMM</span><i>✦</i><span>Reels</span><i>✦</i><span>Графический дизайн</span><i>✦</i><span>Автоматизация</span><i>✦</i><span>Telegram-боты</span><i>✦</i><span>Мини-приложения</span><i>✦</i><span>ИИ-генерация фото</span><i>✦</i>
+      <span>SMM</span><i>✦</i><span>Reels</span><i>✦</i><span>Графический дизайн</span><i>✦</i><span>Автоматизация</span><i>✦</i><span>Telegram-боты</span><i>✦</i><span>Мини-приложения</span><i>✦</i><span>ИИ-генерация фото</span><i>✦</i>
+    </div>
+  </div>
+
+  <!-- ОБО МНЕ -->
+  <section id="about" class="about">
+    <!-- Фото без фона (WebP с прозрачностью) поверх стеклянной рамки -->
+    <div class="about__photo" id="aboutPhoto" data-reveal>
+      <img src="assets/about-photo.webp" alt="Роман Кулачко" width="960" height="1280" onerror="this.closest('.about__photo').classList.add('is-empty')">
+      <div class="about__photo-fallback">
+        <svg width="42" height="42"><use href="#icon-user"/></svg>
+        <span>Фото скоро будет добавлено</span>
+      </div>
+    </div>
+
+    <div class="about__info">
+      <p class="eyebrow" data-reveal>Обо мне</p>
+      <h2 class="section-title" data-split>Привет, я <span class="accent">Роман</span></h2>
+      <p class="about__text" data-reveal>Мне 22 года, живу в Нячанге, Вьетнам.</p>
+      <p class="about__text" data-reveal>Я SMM-специалист и графический дизайнер. Веду соцсети, делаю Reels и визуал: от аватарки до баннера на пляж. Если съёмка не нужна или её не организовать, генерирую фото с помощью <a class="accent" href="https://en.wikipedia.org/wiki/Artificial_intelligence" target="_blank" rel="noopener noreferrer">ИИ</a>.</p>
+      <p class="about__text" data-reveal>Ещё я автоматизирую рутину. Смотрю, что человек каждый день делает руками, и собираю под это бота или мини-приложение в Telegram.</p>
+      <p class="about__text" data-reveal>Окончил <a class="accent" href="https://itstep.org/" target="_blank" rel="noopener noreferrer">Академию ItStep</a> по специальности «графический дизайнер».</p>
+
+      <button class="about-fact about-fact--btn" id="diplomaBtn" type="button" data-reveal>
+        <span class="about-fact__icon"><svg width="20" height="20"><use href="#icon-diploma"/></svg></span>
+        <span><small>Академия ItStep</small><b>Смотреть диплом</b></span>
+        <svg class="about-fact__arrow btn-arrow" width="16" height="16"><use href="#icon-arrow"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- АВТОМАТИЗАЦИЯ -->
+  <section id="automation" class="automation">
+    <p class="eyebrow center" data-reveal>Автоматизация</p>
+    <h2 class="section-title center" data-split>Делаю так, чтобы рутина <span class="accent">работала&nbsp;сама</span></h2>
+    <p class="section-sub center" data-reveal>Сначала разбираюсь, что вы каждый день делаете вручную. Потом переношу это в Telegram, и дальше этим занимается бот. Вот что уже работает у моих клиентов.</p>
+
+    <div class="auto-list">
+      <div class="auto-head" aria-hidden="true"><span></span><span>Было</span><span></span><span>Стало</span></div>
+      <div class="auto-row" data-reveal>
+        <span class="auto-row__tag">Репетитор</span>
+        <p class="auto-row__was"><span>Напоминать каждому ученику о занятии</span></p>
+        <span class="auto-row__arrow"><svg width="22" height="22"><use href="#icon-arrow"/></svg></span>
+        <p class="auto-row__now">Бот напоминает сам — за сутки, за час и за 10 минут до урока</p>
+      </div>
+      <div class="auto-row" data-reveal>
+        <span class="auto-row__tag">Репетитор</span>
+        <p class="auto-row__was"><span>Рассылать домашку и следить, чтобы про неё не забыли</span></p>
+        <span class="auto-row__arrow"><svg width="22" height="22"><use href="#icon-arrow"/></svg></span>
+        <p class="auto-row__now">Задание приходит в бот и само напоминает о себе</p>
+      </div>
+      <div class="auto-row" data-reveal>
+        <span class="auto-row__tag">Репетитор</span>
+        <p class="auto-row__was"><span>Помнить, кто сколько занятий оплатил</span></p>
+        <span class="auto-row__arrow"><svg width="22" height="22"><use href="#icon-arrow"/></svg></span>
+        <p class="auto-row__now">Баланс занятий считается сам</p>
+      </div>
+      <div class="auto-row" data-reveal>
+        <span class="auto-row__tag">Карта дня</span>
+        <p class="auto-row__was"><span>Не забыть вечером заполнить карту дня</span></p>
+        <span class="auto-row__arrow"><svg width="22" height="22"><use href="#icon-arrow"/></svg></span>
+        <p class="auto-row__now">Бот напоминает каждый вечер, ответы сохраняются сами</p>
+      </div>
+      <div class="auto-row" data-reveal>
+        <span class="auto-row__tag">Карта дня</span>
+        <p class="auto-row__was"><span>Собрать бланк за неделю для терапевта</span></p>
+        <span class="auto-row__arrow"><svg width="22" height="22"><use href="#icon-arrow"/></svg></span>
+        <p class="auto-row__now">Одна кнопка — и готовый PDF, как на бумаге</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- КЕЙСЫ -->
+  <section id="cases" class="cases">
+    <p class="eyebrow center" data-reveal>Кейсы</p>
+    <h2 class="section-title center" data-split>Что я уже <span class="accent">сделал</span></h2>
+    <p class="section-sub center" data-reveal>В каждом кейсе: какая была задача, что я сделал и как это выглядит на экране.</p>
+
+    <!-- Кейс 1: репетитор -->
+    <article class="case-card" data-case="tutor" data-spotlight data-reveal>
+      <div class="case-card__body">
+        <div class="case-tags"><span class="case-tag">Telegram Mini App + бот</span><span class="case-tag case-tag--auto">Автоматизация</span></div>
+        <h3 class="case-card__title">Автоматизировал рутину <span class="c-accent">репетитора</span></h3>
+        <p class="case-card__text">Анна Евгеньевна готовит школьников к ЕГЭ и ОГЭ по русскому языку. Раньше она сама напоминала про уроки, рассылала домашку и следила за оплатами. Теперь это делает бот в Telegram.</p>
+        <ul class="case-facts">
+          <li><b data-count="2">2</b><span>кабинета — у репетитора и у ученика</span></li>
+          <li><b data-count="5">5</b><span>автонапоминаний — о занятии и домашке</span></li>
+          <li><b data-count="0">0</b><span>новых приложений для учеников</span></li>
+        </ul>
+        <button class="btn-case" type="button" data-open-case="tutor">Смотреть кейс <svg class="btn-arrow" width="16" height="16"><use href="#icon-arrow"/></svg></button>
+      </div>
+      <div class="case-card__stage" role="button" tabindex="0" data-open-case="tutor" aria-label="Открыть кейс: автоматизация для репетитора">
+        <span class="stage-glow"></span>
+        <div class="phone-stack">
+          <div class="iphone iphone--card iphone--back iphone--left" data-parallax="-0.02">
+            <div class="iphone__screen"><img class="only-light" src="assets/cases/tutor/schedule-light.webp" alt="" loading="lazy"><img class="only-dark" src="assets/cases/tutor/schedule-dark.webp" alt="" loading="lazy"></div>
+            <span class="iphone__island"></span>
+          </div>
+          <div class="iphone iphone--card iphone--back iphone--right" data-parallax="-0.1">
+            <div class="iphone__screen"><img class="only-light" src="assets/cases/tutor/remind-light.webp" alt="" loading="lazy"><img class="only-dark" src="assets/cases/tutor/remind-dark.webp" alt="" loading="lazy"></div>
+            <span class="iphone__island"></span>
+          </div>
+          <div class="iphone iphone--card iphone--front" data-parallax="-0.06" data-tilt>
+            <div class="iphone__screen"><img class="only-light" src="assets/cases/tutor/student-light.webp" alt="Мини-приложение: кабинет ученика" loading="lazy"><img class="only-dark" src="assets/cases/tutor/student-dark.webp" alt="Мини-приложение: кабинет ученика" loading="lazy"></div>
+            <span class="iphone__island"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Кейс 2: карта дня DBT -->
+    <article class="case-card case-card--reverse" data-case="dbt" data-spotlight data-reveal>
+      <div class="case-card__body">
+        <div class="case-tags"><span class="case-tag">Telegram Mini App</span><span class="case-tag case-tag--auto">Автоматизация</span></div>
+        <h3 class="case-card__title">Карта дня, которую <span class="c-accent">не&nbsp;забудешь</span> заполнить</h3>
+        <p class="case-card__text">Клиентка проходит курс DBT и каждый день заполняет карту дня. Бумажную карту она часто забывала заполнить. Я перенёс её в Telegram: вечером приходит напоминание, а в конце недели бот присылает готовый PDF.</p>
+        <ul class="case-facts">
+          <li><b>21:00</b><span>каждый вечер — напоминание</span></li>
+          <li><b data-count="1">1</b><span>кнопка — и PDF за неделю готов</span></li>
+          <li><b data-count="0">0</b><span>ответов хранится на сервере</span></li>
+        </ul>
+        <button class="btn-case" type="button" data-open-case="dbt">Смотреть кейс <svg class="btn-arrow" width="16" height="16"><use href="#icon-arrow"/></svg></button>
+      </div>
+      <div class="case-card__stage" role="button" tabindex="0" data-open-case="dbt" aria-label="Открыть кейс: карта дня DBT">
+        <span class="stage-glow"></span>
+        <div class="iphone iphone--card" data-parallax="-0.06" data-tilt>
+          <div class="iphone__screen"><img class="only-light" src="assets/cases/dbt/day-light.webp" alt="Карта дня в Telegram" loading="lazy"><img class="only-dark" src="assets/cases/dbt/day-dark.webp" alt="Карта дня в Telegram" loading="lazy"></div>
+          <span class="iphone__island"></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Кейс 3: FlyGuru -->
+    <article class="case-card" data-case="flyguru" data-spotlight data-reveal>
+      <div class="case-card__body">
+        <div class="case-tags"><span class="case-tag">SMM</span><span class="case-tag">Дизайн</span></div>
+        <h3 class="case-card__title">Соцсети <span class="c-accent">FlyGuru</span></h3>
+        <p class="case-card__text">FlyGuru — школа катания на электрофойлах в Нячанге. Я вёл их Instagram: делал Reels и рекламные креативы. Для пляжа сделал баннеры и карточку с QR-кодами, для профиля — сторис с прайсом, а ещё дизайн лайкры.</p>
+        <!-- Цифры — из статистики Instagram за 90 дней (3 июля — 30 сентября 2026) -->
+        <ul class="case-facts case-facts--compact">
+          <li><b><span data-count="388">388</span><small> тыс.</small></b><span>просмотров за 90 дней</span></li>
+          <li><b><span data-count="111.2">111,2</span><small> тыс.</small></b><span>у самого популярного Reels</span></li>
+          <li><b><span data-count="302" data-prefix="+">+302</span></b><span>подписчика за 90 дней</span></li>
+        </ul>
+        <button class="btn-case" type="button" data-open-case="flyguru">Смотреть кейс <svg class="btn-arrow" width="16" height="16"><use href="#icon-arrow"/></svg></button>
+      </div>
+      <div class="case-card__stage" role="button" tabindex="0" data-open-case="flyguru" aria-label="Открыть кейс: соцсети FlyGuru">
+        <span class="stage-glow"></span>
+        <div class="iphone iphone--card" data-parallax="-0.06" data-tilt>
+          <div class="iphone__screen">
+            <video class="card-video" data-autoplay data-src="assets/cases/flyguru/card-loop.mp4" poster="assets/cases/flyguru/card-loop.jpg" muted loop playsinline preload="none" aria-label="Фрагмент Reels FlyGuru"></video>
+          </div>
+          <span class="iphone__island"></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Кейс 4: НячангGO — логотип и флаер (без iPhone: окно редактора + флаер вживую) -->
+    <article class="case-card case-card--reverse" data-case="nhatrang" data-spotlight data-reveal>
+      <div class="case-card__body">
+        <div class="case-tags"><span class="case-tag">Логотип</span><span class="case-tag">Полиграфия</span></div>
+        <h3 class="case-card__title">Логотип и флаер для <span class="c-accent">НячангGO</span></h3>
+        <p class="case-card__text">НячангGO — сообщество авторских путешествий в Нячанге. Я сделал два варианта логотипа и флаер, который команда раздаёт новым клиентам и туристам.</p>
+        <ul class="case-chips">
+          <li>2 варианта логотипа</li><li>Складной флаер</li><li>QR-коды на соцсети</li><li>Печать</li>
+        </ul>
+        <button class="btn-case" type="button" data-open-case="nhatrang">Смотреть кейс <svg class="btn-arrow" width="16" height="16"><use href="#icon-arrow"/></svg></button>
+      </div>
+      <div class="case-card__stage" role="button" tabindex="0" data-open-case="nhatrang" aria-label="Открыть кейс: логотип и флаер НячангGO">
+        <span class="stage-glow"></span>
+        <div class="ng-combo">
+          <div class="editor editor--card" data-parallax="-0.03" data-tilt>
+            <span class="editor__bar"><i></i><i></i><i></i><b>НячангGO — логотип</b></span>
+            <div class="editor__body">
+              <span class="editor__tools" aria-hidden="true">
+                <svg class="is-active"><use href="#icon-tool-move"/></svg><svg><use href="#icon-tool-marquee"/></svg><svg><use href="#icon-tool-pen"/></svg><svg><use href="#icon-tool-type"/></svg><svg><use href="#icon-tool-shape"/></svg>
+              </span>
+              <div class="editor__canvas">
+                <div class="artboard is-active"><img src="assets/cases/nhatrang/logo-full.webp" alt="Логотип НячангGO" loading="lazy"></div>
+              </div>
+            </div>
+          </div>
+          <img class="ng-combo__photo" src="assets/cases/nhatrang/photo-1.webp" alt="Флаер НячангGO в руке" loading="lazy" data-parallax="-0.11">
+        </div>
+      </div>
+    </article>
+
+    <!-- Кейс 5: лендинг друга — добавить, когда будут материалы -->
+  </section>
+
+  <!-- УСЛУГИ -->
+  <section id="services" class="services">
+    <p class="eyebrow center" data-reveal>Что я делаю</p>
+    <h2 class="section-title center" data-split>Услуги</h2>
+    <p class="section-sub center" data-reveal>Цены на основные работы. Точную стоимость назову, когда обсудим задачу.</p>
+
+    <div class="services__panel" data-reveal>
+      <div class="services__tabs" role="tablist" aria-label="Категории услуг">
+        <i class="services__knob" aria-hidden="true"></i>
+        <button class="services__tab is-active" type="button" role="tab" aria-selected="true" data-tab="graphic">
+          <svg width="16" height="16"><use href="#icon-palette"/></svg>
+          Графический дизайн
+        </button>
+        <button class="services__tab" type="button" role="tab" aria-selected="false" data-tab="business">
+          <svg width="16" height="16"><use href="#icon-briefcase"/></svg>
+          Полиграфия
+        </button>
+        <button class="services__tab" type="button" role="tab" aria-selected="false" data-tab="music">
+          <svg width="16" height="16"><use href="#icon-music"/></svg>
+          Музыканты и артисты
+        </button>
+        <button class="services__tab" type="button" role="tab" aria-selected="false" data-tab="smm">
+          <svg width="16" height="16"><use href="#icon-megaphone"/></svg>
+          SMM
+        </button>
+        <button class="services__tab" type="button" role="tab" aria-selected="false" data-tab="extra">
+          <svg width="16" height="16"><use href="#icon-bolt"/></svg>
+          Доп. услуги
+        </button>
+      </div>
+
+      <div class="services__content">
+
+        <div class="services__pane is-active" data-pane="graphic" role="tabpanel">
+          <ul class="svc-list">
+            <li class="svc"><div><b class="svc__name">Логотип</b><p class="svc__desc">Под ваш проект или бренд.</p></div><span class="svc__price"><small>от</small>30$</span></li>
+            <li class="svc"><div><b class="svc__name">Баннер / обложка</b><p class="svc__desc">Для соцсетей, YouTube, рекламы и сайтов.</p></div><span class="svc__price"><small>от</small>30$</span></li>
+            <li class="svc"><div><b class="svc__name">Аватар / иконка профиля</b></div><span class="svc__price"><small>от</small>25$</span></li>
+            <li class="svc"><div><b class="svc__name">Превью / постер</b><p class="svc__desc">YouTube, мероприятия, афиши, реклама.</p></div><span class="svc__price"><small>от</small>25$</span></li>
+            <li class="svc"><div><b class="svc__name">Рекламный креатив</b></div><span class="svc__price"><small>от</small>30$</span></li>
+            <li class="svc"><div><b class="svc__name">Обработка фото</b></div><span class="svc__price"><small>от</small>20$</span></li>
+            <li class="svc"><div><b class="svc__name">Монтаж короткого видео</b><p class="svc__desc">Reels, TikTok, Shorts.</p></div><span class="svc__price"><small>от</small>30$</span></li>
+          </ul>
+        </div>
+
+        <div class="services__pane" data-pane="business" role="tabpanel" hidden>
+          <ul class="svc-list">
+            <li class="svc"><div><b class="svc__name">Визитка</b></div><span class="svc__price"><small>от</small>30$</span></li>
+            <li class="svc"><div><b class="svc__name">Флаер / листовка</b></div><span class="svc__price"><small>от</small>30$</span></li>
+            <li class="svc"><div><b class="svc__name">Меню для кафе / прайс-лист</b></div><span class="svc__price"><small>от</small>30$</span></li>
+            <li class="svc"><div><b class="svc__name">Сертификат / диплом</b></div><span class="svc__price"><small>от</small>30$</span></li>
+            <li class="svc"><div><b class="svc__name">Коммерческое предложение</b></div><span class="svc__price"><small>от</small>30$</span></li>
+          </ul>
+        </div>
+
+        <div class="services__pane" data-pane="music" role="tabpanel" hidden>
+          <ul class="svc-list">
+            <li class="svc"><div><b class="svc__name">Обложка сингла</b></div><span class="svc__price"><small>от</small>30$</span></li>
+            <li class="svc"><div><b class="svc__name">Обложка альбома</b></div><span class="svc__price"><small>от</small>30$</span></li>
+            <li class="svc"><div><b class="svc__name">Анимация обложки</b></div><span class="svc__price"><small>от</small>30$</span></li>
+            <li class="svc"><div><b class="svc__name">Визуал для релиза (промо)</b></div><span class="svc__price"><small>от</small>30$</span></li>
+            <li class="svc"><div><b class="svc__name">Карточка артиста для Spotify / Apple Music</b></div><span class="svc__price"><small>от</small>30$</span></li>
+          </ul>
+        </div>
+
+        <!-- SMM: пакет на неделю крупно, дополнения — рядом -->
+        <div class="services__pane" data-pane="smm" role="tabpanel" hidden>
+          <div class="smm">
+            <article class="smm__pkg">
+              <div class="smm__head">
+                <div>
+                  <span class="smm__badge">Пакет на неделю</span>
+                  <h3 class="smm__title">Базовый пакет</h3>
+                </div>
+                <span class="smm__price"><small>от</small>125$<em>/ неделя</em></span>
+              </div>
+              <ul class="smm__list">
+                <li><svg width="18" height="18"><use href="#icon-check"/></svg>Оформление профиля: аватар, шапка, стиль</li>
+                <li><svg width="18" height="18"><use href="#icon-check"/></svg>Тексты и описания</li>
+                <li><svg width="18" height="18"><use href="#icon-check"/></svg>Разработка визуального стиля</li>
+                <li><svg width="18" height="18"><use href="#icon-check"/></svg><span><b>2 Reels</b> в неделю</span></li>
+                <li><svg width="18" height="18"><use href="#icon-check"/></svg><span><b>2 публикации</b> в неделю — фото или видео</span></li>
+                <li><svg width="18" height="18"><use href="#icon-check"/></svg><span><b>3–4 истории</b> в Instagram каждый день</span></li>
+              </ul>
+            </article>
+            <div class="smm__extra">
+              <p class="smm__extra-title">Можно добавить</p>
+              <ul class="svc-list svc-list--one">
+                <li class="svc"><div><b class="svc__name">Доп. Reels</b></div><span class="svc__price"><small>от</small>20$</span></li>
+                <li class="svc"><div><b class="svc__name">Доп. публикация</b></div><span class="svc__price"><small>от</small>15$</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="services__pane" data-pane="extra" role="tabpanel" hidden>
+          <ul class="svc-list">
+            <li class="svc"><div><b class="svc__name">Срочность (24 часа)</b></div><span class="svc__price">+50%</span></li>
+            <li class="svc"><div><b class="svc__name">Дополнительные правки</b></div><span class="svc__price"><small>от</small>5$</span></li>
+            <li class="svc"><div><b class="svc__name">Исходники (PSD / AI / AE / PR)</b></div><span class="svc__price">+10$</span></li>
+            <li class="svc"><div><b class="svc__name">Консультация по дизайну / стилю</b></div><span class="svc__price">10$</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="services__foot">
+        <p>Нужного нет в списке? Напишите, что хотите сделать, и я назову сроки и цену.</p>
+        <a class="services__cta" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15"><use href="#icon-send"/></svg>
+          Написать в Telegram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- СЕЙЧАС В ФОКУСЕ: сайты и автоматизация (цены — предварительные, Роман уточнит) -->
+  <section id="focus" class="focus">
+    <p class="eyebrow center" data-reveal><span class="live-dot" aria-hidden="true"></span>Сейчас в фокусе</p>
+    <h2 class="section-title center" data-split>Сайты и <span class="accent">автоматизация</span></h2>
+    <p class="section-sub center" data-reveal>Делаю лендинги и сайты, а ещё ботов и мини-приложения в Telegram, которые забирают рутину.</p>
+
+    <div class="focus__grid">
+      <article class="focus-card" data-spotlight data-reveal>
+        <span class="focus-card__icon"><svg width="24" height="24"><use href="#icon-bolt"/></svg></span>
+        <h3 class="focus-card__title">Автоматизация в Telegram</h3>
+        <p class="focus-card__text">Бот или мини-приложение под вашу задачу: напоминает клиентам, ведёт учёт оплат, собирает отчёты. Примеры — в кейсах репетитора и карты дня.</p>
+        <ul class="focus-card__chips"><li>Напоминания</li><li>Учёт оплат</li><li>Отчёты в PDF</li></ul>
+        <div class="focus-card__foot">
+          <span class="focus-card__price"><small>от</small>200$</span>
+          <a class="focus-card__link" href="#cases">Кейсы <svg class="btn-arrow" width="16" height="16"><use href="#icon-arrow"/></svg></a>
+        </div>
+      </article>
+      <article class="focus-card" data-spotlight data-reveal>
+        <span class="focus-card__icon"><svg width="24" height="24"><use href="#icon-browser"/></svg></span>
+        <h3 class="focus-card__title">Лендинг</h3>
+        <p class="focus-card__text">Одна страница о вас или вашем проекте: кто вы, что предлагаете и как с вами связаться. Хорошо смотрится на телефоне, с анимацией при прокрутке. Пример — этот сайт.</p>
+        <ul class="focus-card__chips"><li>Одна страница</li><li>Под телефон</li><li>Анимации</li></ul>
+        <div class="focus-card__foot">
+          <span class="focus-card__price"><small>от</small>250$</span>
+          <a class="focus-card__link" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer">Обсудить <svg class="btn-arrow" width="16" height="16"><use href="#icon-arrow"/></svg></a>
+        </div>
+      </article>
+      <article class="focus-card" data-spotlight data-reveal>
+        <span class="focus-card__icon"><svg width="24" height="24"><use href="#icon-layers"/></svg></span>
+        <h3 class="focus-card__title">Сайт</h3>
+        <p class="focus-card__text">Если одной страницы мало: несколько разделов, каталог услуг или курсов, заявки, личный кабинет, оплата.</p>
+        <ul class="focus-card__chips"><li>Несколько страниц</li><li>Заявки и оплата</li><li>Личный кабинет</li></ul>
+        <div class="focus-card__foot">
+          <span class="focus-card__price"><small>от</small>400$</span>
+          <a class="focus-card__link" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer">Обсудить <svg class="btn-arrow" width="16" height="16"><use href="#icon-arrow"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ПОРТФОЛИО -->
+  <section id="portfolio" class="portfolio">
+    <p class="eyebrow center" data-reveal>Работы</p>
+    <h2 class="section-title center" data-split>Другие работы</h2>
+    <p class="section-sub center" data-reveal>Reels, креативы, баннеры и обложки. Нажмите на работу, чтобы открыть её крупно.</p>
+
+    <!-- Сетка: v — вертикаль 1×3, h — 2×3, w — 2×2, sq — 1×2 (в рядах по 130px).
+         По нажатию: картинка открывается крупно, ролик — в плеере со звуком.
+         portfolio__item--extra на телефоне скрыты, чтобы блок не растягивался -->
+    <div class="portfolio__grid" data-reveal>
+      <button class="portfolio__item portfolio__item--v" type="button" data-pf-video="assets/cases/flyguru/reels-3.mp4" aria-label="Смотреть: Reels FlyGuru — знакомство на камеру">
+        <img class="portfolio__media" src="assets/cases/flyguru/reels-3.jpg" alt="Reels FlyGuru — знакомство на камеру" loading="lazy">
+        <span class="portfolio__badge">Reels · FlyGuru</span>
+        <span class="portfolio__play" aria-hidden="true"><svg width="24" height="24"><use href="#icon-play"/></svg></span>
+      </button>
+      <button class="portfolio__item portfolio__item--h" type="button" data-lightbox="assets/portfolio/work-1.jpg" aria-label="Открыть: Креативный визуал">
+        <img class="portfolio__media" src="assets/portfolio/work-1.jpg" alt="Креативный визуал" loading="lazy">
+        <span class="portfolio__badge">Визуал</span>
+        <span class="portfolio__noai"><svg width="12" height="12"><use href="#icon-check"/></svg>Сделано без ИИ</span>
+      </button>
+      <button class="portfolio__item portfolio__item--v" type="button" data-pf-video="assets/cases/flyguru/creative-1.mp4" aria-label="Смотреть: Рекламный креатив FlyGuru «Знакомьтесь — EFOIL»">
+        <img class="portfolio__media" src="assets/cases/flyguru/creative-1.jpg" alt="Рекламный креатив FlyGuru «Знакомьтесь — EFOIL»" loading="lazy">
+        <span class="portfolio__badge">Креатив · FlyGuru</span>
+        <span class="portfolio__play" aria-hidden="true"><svg width="24" height="24"><use href="#icon-play"/></svg></span>
+      </button>
+      <button class="portfolio__item portfolio__item--h" type="button" data-lightbox="assets/cases/flyguru/banner-a3.webp" aria-label="Открыть: Баннер A3 для пляжа FlyGuru">
+        <img class="portfolio__media" src="assets/cases/flyguru/banner-a3.webp" alt="Баннер A3 для пляжа FlyGuru" loading="lazy">
+        <span class="portfolio__badge">Баннер · FlyGuru</span>
+      </button>
+      <button class="portfolio__item portfolio__item--v" type="button" data-lightbox="assets/cases/flyguru/story-price.webp" aria-label="Открыть: Сторис с прайсом FlyGuru">
+        <img class="portfolio__media" src="assets/cases/flyguru/story-price.webp" alt="Сторис с прайсом FlyGuru" loading="lazy">
+        <span class="portfolio__badge">Сторис · FlyGuru</span>
+      </button>
+      <button class="portfolio__item portfolio__item--v" type="button" data-pf-video="assets/cases/flyguru/reels-1.mp4" aria-label="Смотреть: Reels FlyGuru «Обогнал яхту на e-foil»">
+        <img class="portfolio__media" src="assets/cases/flyguru/reels-1.jpg" alt="Reels FlyGuru «Обогнал яхту на e-foil»" loading="lazy">
+        <span class="portfolio__badge">Reels · FlyGuru</span>
+        <span class="portfolio__play" aria-hidden="true"><svg width="24" height="24"><use href="#icon-play"/></svg></span>
+      </button>
+      <button class="portfolio__item portfolio__item--v portfolio__item--extra" type="button" data-pf-video="assets/cases/flyguru/creative-3.mp4" aria-label="Смотреть: Рекламный креатив FlyGuru «А ты уже летал над…»">
+        <img class="portfolio__media" src="assets/cases/flyguru/creative-3.jpg" alt="Рекламный креатив FlyGuru «А ты уже летал над…»" loading="lazy">
+        <span class="portfolio__badge">Креатив · FlyGuru</span>
+        <span class="portfolio__play" aria-hidden="true"><svg width="24" height="24"><use href="#icon-play"/></svg></span>
+      </button>
+      <button class="portfolio__item portfolio__item--v portfolio__item--extra" type="button" data-lightbox="assets/portfolio/work-2.jpg" aria-label="Открыть: Рекламный баннер">
+        <img class="portfolio__media" src="assets/portfolio/work-2.jpg" alt="Рекламный баннер" loading="lazy">
+        <span class="portfolio__badge">Визуал</span>
+        <span class="portfolio__noai"><svg width="12" height="12"><use href="#icon-check"/></svg>Сделано без ИИ</span>
+      </button>
+      <button class="portfolio__item portfolio__item--h portfolio__item--extra" type="button" data-lightbox="assets/cases/flyguru/qr-card.webp" aria-label="Открыть: Карточка с QR-кодами FlyGuru">
+        <img class="portfolio__media" src="assets/cases/flyguru/qr-card.webp" alt="Карточка с QR-кодами FlyGuru" loading="lazy">
+        <span class="portfolio__badge">QR-карточка · FlyGuru</span>
+      </button>
+      <button class="portfolio__item portfolio__item--sq" type="button" data-lightbox="assets/portfolio/work-3.jpg" aria-label="Открыть: Обложка релиза Seizures">
+        <img class="portfolio__media" src="assets/portfolio/work-3.jpg" alt="Обложка релиза Seizures" loading="lazy">
+        <span class="portfolio__badge">Обложка</span>
+        <span class="portfolio__noai"><svg width="12" height="12"><use href="#icon-check"/></svg>Сделано без ИИ</span>
+      </button>
+      <button class="portfolio__item portfolio__item--sq" type="button" data-lightbox="assets/portfolio/work-4.jpg" aria-label="Открыть: Обложка релиза «Влюбился»">
+        <img class="portfolio__media" src="assets/portfolio/work-4.jpg" alt="Обложка релиза «Влюбился»" loading="lazy">
+        <span class="portfolio__badge">Обложка</span>
+        <span class="portfolio__noai"><svg width="12" height="12"><use href="#icon-check"/></svg>Сделано без ИИ</span>
+      </button>
+      <button class="portfolio__item portfolio__item--w portfolio__item--extra" type="button" data-lightbox="assets/cases/flyguru/lycra.webp" aria-label="Открыть: Лайкра E-FOIL RIDER: спереди и сзади">
+        <img class="portfolio__media" src="assets/cases/flyguru/lycra.webp" alt="Лайкра E-FOIL RIDER: спереди и сзади" loading="lazy">
+        <span class="portfolio__badge">Мерч · FlyGuru</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ОТЗЫВЫ: настоящие, из кейсов. Нажатие открывает кейс на этом отзыве (data-review-link="кейс:data-review-id") -->
+  <section id="reviews" class="reviews">
+    <p class="eyebrow center" data-reveal>Отзывы</p>
+    <h2 class="section-title center" data-split>Что говорят <span class="accent">клиенты</span></h2>
+    <p class="section-sub center" data-reveal>Сообщения из Telegram — без правок по смыслу. Нажмите на отзыв, чтобы открыть кейс, к которому он относится.</p>
+
+    <div class="reviews__carousel">
+      <button class="reviews__nav reviews__nav--prev" type="button" data-reviews-prev aria-label="Предыдущий отзыв">
+        <svg width="18" height="18"><use href="#icon-chevron"/></svg>
+      </button>
+
+      <div class="reviews__track" id="reviewsTrack">
+        <article class="review-card" data-case="tutor" data-review-link="tutor:anna" role="link" tabindex="0" aria-label="Анна Евгеньевна — открыть отзыв в кейсе «Мини-приложение для репетитора»">
+          <span class="review-card__project"><i aria-hidden="true"></i>Мини-приложение для репетитора</span>
+          <div class="review-card__bubble"><p class="review-card__text">Я вообще в восторге <img class="emoji" src="assets/emoji/1f929.png" alt="🤩"> Раньше вручную вела учёт абонементов и напоминала ученикам о занятии, а сейчас уведомления детям и родителям приходят автоматически. И мне теперь не нужно, как попрошайке, писать родителям, чтобы скинули деньги за урок, — за меня это делает бот <img class="emoji" src="assets/emoji/1f605.png" alt="😅"> Да и вообще, стало очень удобно отслеживать финансы.</p></div>
+          <div class="review-card__foot">
+            <span class="review-card__avatar">А</span>
+            <span class="review-card__who"><b>Анна Евгеньевна</b><i>репетитор по русскому языку</i></span>
+            <span class="review-card__go" aria-hidden="true"><svg width="16" height="16"><use href="#icon-arrow"/></svg></span>
+          </div>
+        </article>
+        <article class="review-card" data-case="dbt" data-review-link="dbt:client" role="link" tabindex="0" aria-label="Имя скрыто — открыть отзыв в кейсе «Карта дня DBT»">
+          <span class="review-card__project"><i aria-hidden="true"></i>Карта дня DBT</span>
+          <div class="review-card__bubble"><p class="review-card__text">Мне всегда было лень заполнять карту дня, потому что её надо распечатать, достать, всё вручную заполнить. &lt;…&gt; Теперь у меня всё в телефоне и всегда под рукой. А если я забуду о карте дня, мне придёт напоминалка. А как меня психолог похвалил, айай <img class="emoji" src="assets/emoji/1f602.png" alt="😂"></p></div>
+          <div class="review-card__foot">
+            <span class="review-card__avatar review-card__avatar--icon"><svg width="16" height="16"><use href="#icon-lock"/></svg></span>
+            <span class="review-card__who"><b>Имя скрыто</b><i>клиентка, заполняет карту дня</i></span>
+            <span class="review-card__go" aria-hidden="true"><svg width="16" height="16"><use href="#icon-arrow"/></svg></span>
+          </div>
+        </article>
+        <article class="review-card" data-case="nhatrang" data-review-link="nhatrang:client" role="link" tabindex="0" aria-label="НячангGO — открыть отзыв в кейсе «Логотип и флаер НячангGO»">
+          <span class="review-card__project"><i aria-hidden="true"></i>Логотип и флаер НячангGO</span>
+          <div class="review-card__bubble"><p class="review-card__text">Но этот вариант тоже топ. От души <img class="emoji" src="assets/emoji/1f525.png" alt="🔥"><img class="emoji" src="assets/emoji/1f525.png" alt="🔥"><img class="emoji" src="assets/emoji/1f525.png" alt="🔥"> Всё-таки офигенный мы с тобой логотип GO сделали <img class="emoji" src="assets/emoji/1f64c-1f3fe.png" alt="🙌🏾"></p></div>
+          <div class="review-card__foot">
+            <span class="review-card__avatar review-card__avatar--logo"><img src="assets/cases/nhatrang/logo-go.webp" alt=""></span>
+            <span class="review-card__who"><b>НячангGO</b><i>заказчик, принимал работу</i></span>
+            <span class="review-card__go" aria-hidden="true"><svg width="16" height="16"><use href="#icon-arrow"/></svg></span>
+          </div>
+        </article>
+        <article class="review-card" data-case="tutor" data-review-link="tutor:student" role="link" tabindex="0" aria-label="Ученица — открыть отзыв в кейсе «Мини-приложение для репетитора»">
+          <span class="review-card__project"><i aria-hidden="true"></i>Мини-приложение для репетитора</span>
+          <div class="review-card__bubble"><p class="review-card__text">Да, хорошо. Интерфейс приятный <img class="emoji emoji--sticker" src="assets/emoji/cat-sticker.png" alt="🐱"></p></div>
+          <div class="review-card__foot">
+            <span class="review-card__avatar review-card__avatar--icon"><svg width="16" height="16"><use href="#icon-user"/></svg></span>
+            <span class="review-card__who"><b>Ученица</b><i>пользуется ботом</i></span>
+            <span class="review-card__go" aria-hidden="true"><svg width="16" height="16"><use href="#icon-arrow"/></svg></span>
+          </div>
+        </article>
+        <article class="review-card" data-case="tutor" data-review-link="tutor:parent-1" role="link" tabindex="0" aria-label="Родитель ученика — открыть отзыв в кейсе «Мини-приложение для репетитора»">
+          <span class="review-card__project"><i aria-hidden="true"></i>Мини-приложение для репетитора</span>
+          <div class="review-card__bubble"><p class="review-card__text">Доброе утро! Как это удобно, благодарю. Ощущаю себя старой в такие моменты <img class="emoji" src="assets/emoji/1f605.png" alt="😅"></p></div>
+          <div class="review-card__foot">
+            <span class="review-card__avatar review-card__avatar--icon"><svg width="16" height="16"><use href="#icon-user"/></svg></span>
+            <span class="review-card__who"><b>Родитель ученика</b><i>получает уведомления от бота</i></span>
+            <span class="review-card__go" aria-hidden="true"><svg width="16" height="16"><use href="#icon-arrow"/></svg></span>
+          </div>
+        </article>
+        <article class="review-card" data-case="tutor" data-review-link="tutor:parent-2" role="link" tabindex="0" aria-label="Родитель ученика — открыть отзыв в кейсе «Мини-приложение для репетитора»">
+          <span class="review-card__project"><i aria-hidden="true"></i>Мини-приложение для репетитора</span>
+          <div class="review-card__bubble"><p class="review-card__text">Добрый день! Да, всё увидела, спасибо. Очень удобно</p></div>
+          <div class="review-card__foot">
+            <span class="review-card__avatar review-card__avatar--icon"><svg width="16" height="16"><use href="#icon-user"/></svg></span>
+            <span class="review-card__who"><b>Родитель ученика</b><i>получает уведомления от бота</i></span>
+            <span class="review-card__go" aria-hidden="true"><svg width="16" height="16"><use href="#icon-arrow"/></svg></span>
+          </div>
+        </article>
+      </div>
+
+      <button class="reviews__nav reviews__nav--next" type="button" data-reviews-next aria-label="Следующий отзыв">
+        <svg width="18" height="18"><use href="#icon-chevron"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- КОНТАКТЫ / CTA -->
+  <section id="contact" class="contact">
+    <p class="eyebrow center" data-reveal>Связь</p>
+    <h2 class="section-title center" data-split>Есть идея для <span class="accent">проекта</span>?</h2>
+    <p class="section-sub center" data-reveal>Напишите в Telegram, что нужно сделать. Обсуждение бесплатное: разберём задачу, сроки и цену.</p>
+    <a class="btn-primary" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer" data-reveal>
+      <svg width="18" height="18"><use href="#icon-send"/></svg>
+      Написать в Telegram
+    </a>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>© 2026 Kulachko Roman</span>
+  <span>SMM · Дизайн · Автоматизация · Нячанг</span>
+</footer>
+
+<!-- МОДАЛКА ДИПЛОМА -->
+<div class="modal" id="diplomaModal" aria-hidden="true">
+  <div class="modal__overlay" data-close></div>
+  <div class="modal__panel modal__panel--gallery">
+    <button class="modal__close" data-close type="button" aria-label="Закрыть">
+      <svg width="18" height="18"><use href="#icon-close"/></svg>
+    </button>
+    <div class="modal__gallery">
+      <img src="assets/diploma-1.jpg" alt="Диплом — Академия ItStep, страница 1">
+      <img src="assets/diploma-2.jpg" alt="Диплом — Академия ItStep, страница 2">
+    </div>
+  </div>
+</div>
+
+
+<!-- ПРОСМОТР КАРТИНОК -->
+<div class="modal" id="lightbox" aria-hidden="true">
+  <div class="modal__overlay" data-close></div>
+  <div class="modal__panel modal__panel--lightbox">
+    <button class="modal__close" data-close type="button" aria-label="Закрыть">
+      <svg width="18" height="18"><use href="#icon-close"/></svg>
+    </button>
+    <img id="lightboxImg" src="" alt="">
+    <video id="lightboxVideo" class="lightbox__video" controls playsinline preload="auto" hidden></video>
+  </div>
+</div>
+
+<!-- ОКНО КЕЙСА -->
+<div class="sheet-wrap" id="caseSheet" aria-hidden="true">
+  <div class="sheet-backdrop" data-sheet-close></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="sheet__bar">
+      <span class="sheet__dot" aria-hidden="true"></span>
+      <div class="sheet__titles"><b id="sheetTitle"></b><small id="sheetSub"></small></div>
+      <a class="sheet__cta" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer">
+        <svg width="15" height="15"><use href="#icon-send"/></svg><span>Обсудить проект</span>
+      </a>
+      <button class="sheet__close" type="button" data-sheet-close aria-label="Закрыть кейс">
+        <svg width="18" height="18"><use href="#icon-close"/></svg>
+      </button>
+      <span class="sheet__progress" id="sheetProgress"></span>
+    </div>
+    <div class="sheet__scroll" id="sheetScroll">
+      <div class="sheet__content" id="sheetContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- СОГЛАСИЕ НА COOKIE: показывается при первом заходе; пока не нажато «Принять», тема в браузере не сохраняется -->
+<div class="cookie" id="cookie" role="dialog" aria-labelledby="cookieTitle" hidden>
+  <div class="cookie__top">
+    <span class="cookie__icon" aria-hidden="true"><svg width="20" height="20"><use href="#icon-cookie"/></svg></span>
+    <p class="cookie__text"><b id="cookieTitle">Файлы cookie</b>Сайт сохраняет в браузере только ваши настройки, например выбранную тему. Рекламы и трекеров здесь нет.</p>
+  </div>
+  <div class="cookie__actions">
+    <button class="cookie__btn cookie__btn--ghost" type="button" data-cookie="declined">Отклонить</button>
+    <button class="cookie__btn" type="button" data-cookie="accepted">Принять</button>
+  </div>
+</div>
+
+<!-- ============ ПОЛНЫЕ КЕЙСЫ (открываются поверх страницы) ============ -->
+
+<!-- КЕЙС: РЕПЕТИТОР -->
+<template id="case-tutor" data-case="tutor" data-title="Автоматизация для репетитора" data-sub="Telegram Mini App + бот" data-next="dbt">
+  <header class="cs-hero">
+    <div class="case-tags" data-reveal><span class="case-tag">Telegram Mini App + бот</span><span class="case-tag case-tag--auto">Автоматизация</span></div>
+    <h2 class="cs-title" data-split>Автоматизировал рутину <span class="c-accent">репетитора</span></h2>
+    <p class="cs-lead" data-reveal>Анна Евгеньевна готовит школьников к ЕГЭ и ОГЭ по русскому языку, занятия идут онлайн в Zoom. Кроме уроков, на ней было много мелочей: напомнить, отправить домашку, проверить оплату, отметить занятие. Эти мелочи я и отдал боту.</p>
+    <dl class="cs-meta" data-reveal>
+      <div><dt>Клиент</dt><dd>Репетитор по русскому языку</dd></div>
+      <div><dt>Что сделал</dt><dd>Мини-приложение и бот</dd></div>
+      <div><dt>Где работает</dt><dd>Внутри Telegram</dd></div>
+      <div><dt>Когда</dt><dd>Сентябрь 2026</dd></div>
+    </dl>
+  </header>
+
+  <section class="cs-stats">
+    <div class="cs-stat" data-reveal><b data-count="2">2</b><span>кабинета: у репетитора и у каждого ученика</span></div>
+    <div class="cs-stat" data-reveal><b data-count="5">5</b><span>напоминаний — о занятии и о домашке</span></div>
+    <div class="cs-stat" data-reveal><b>1&nbsp;мин</b><span>— так часто бот сверяет расписание</span></div>
+    <div class="cs-stat" data-reveal><b data-count="0">0</b><span>новых приложений — ученики уже в Telegram</span></div>
+  </section>
+
+  <section class="cs-ps">
+    <div class="cs-ps__card" data-reveal>
+      <span class="cs-kicker">Задача</span>
+      <p>Всё, что вокруг уроков, репетитор делала вручную: напоминала ученикам о занятиях, рассылала домашку, следила за оплатами и отмечала прошедшие уроки. Ученики живут в разных часовых поясах, поэтому легко было запутаться в расписании.</p>
+    </div>
+    <div class="cs-ps__card cs-ps__card--solution" data-reveal>
+      <span class="cs-kicker">Решение</span>
+      <p>Я сделал мини-приложение внутри Telegram и бота к нему. У репетитора есть кабинет с расписанием, учениками и оплатами. У каждого ученика — свой: ближайшее занятие, домашка, баланс и кнопка входа в Zoom.</p>
+    </div>
+  </section>
+
+  <section class="cs-how">
+    <div class="cs-head">
+      <span class="cs-kicker">Как это работает</span>
+      <h3 class="cs-h3" data-split>Листайте экраны — как&nbsp;в&nbsp;телефоне</h3>
+    </div>
+    <div class="cs-how__grid">
+      <div class="cs-how__stage">
+        <div class="gallery" data-gallery data-shots>
+          <div class="iphone iphone--lg">
+            <div class="iphone__screen">
+              <div class="iphone__track" data-track>
+                <!-- Экраны сняты с демо-данными: ученики выдуманные, цены и реквизиты размыты -->
+                <figure class="slide"><img class="shot-l" src="assets/cases/tutor/student-light.webp" alt="Кабинет ученика: ближайшее занятие и домашка"><img class="shot-d" src="assets/cases/tutor/student-dark.webp" alt="Кабинет ученика: ближайшее занятие и домашка"></figure>
+                <figure class="slide"><img class="shot-l" src="assets/cases/tutor/remind-light.webp" alt="Напоминания о занятии в боте" loading="lazy"><img class="shot-d" src="assets/cases/tutor/remind-dark.webp" alt="Напоминания о занятии в боте" loading="lazy"></figure>
+                <figure class="slide"><img class="shot-l" src="assets/cases/tutor/homework-light.webp" alt="Домашнее задание в боте" loading="lazy"><img class="shot-d" src="assets/cases/tutor/homework-dark.webp" alt="Домашнее задание в боте" loading="lazy"></figure>
+                <figure class="slide"><img class="shot-l" src="assets/cases/tutor/pay-light.webp" alt="Оплата занятий по СБП" loading="lazy"><img class="shot-d" src="assets/cases/tutor/pay-dark.webp" alt="Оплата занятий по СБП" loading="lazy"></figure>
+                <figure class="slide"><img class="shot-l" src="assets/cases/tutor/digest-light.webp" alt="Утренняя сводка для репетитора" loading="lazy"><img class="shot-d" src="assets/cases/tutor/digest-dark.webp" alt="Утренняя сводка для репетитора" loading="lazy"></figure>
+                <figure class="slide"><img class="shot-l" src="assets/cases/tutor/schedule-light.webp" alt="Расписание репетитора на день" loading="lazy"><img class="shot-d" src="assets/cases/tutor/schedule-dark.webp" alt="Расписание репетитора на день" loading="lazy"></figure>
+              </div>
+            </div>
+            <span class="iphone__island"></span>
+          </div>
+        </div>
+      </div>
+      <ol class="cs-steps">
+        <li class="cs-step" data-step="0"><span class="cs-step__n">01</span><div><h4>Свой кабинет у каждого ученика</h4><p>Ближайшее занятие, кнопка «Подключиться» к Zoom, доска и домашка. Время — в часовом поясе ученика.</p></div></li>
+        <li class="cs-step" data-step="1"><span class="cs-step__n">02</span><div><h4>Бот напоминает о занятии</h4><p>За сутки — с кнопками «Буду» и «Не смогу», потом за час и за 10 минут, уже со ссылкой на Zoom. Ответ ученика репетитор видит сразу.</p></div></li>
+        <li class="cs-step" data-step="2"><span class="cs-step__n">03</span><div><h4>Домашка приходит в бот</h4><p>Репетитор задаёт задание из карточки ученика. Бот присылает его сразу и напоминает за 48 и 24 часа до урока.</p></div></li>
+        <li class="cs-step" data-step="3"><span class="cs-step__n">04</span><div><h4>Оплата в пару касаний</h4><p>Ученик выбирает, сколько занятий оплатить, переводит по СБП и нажимает «Я оплатил». Репетитор подтверждает — баланс обновляется сам.</p></div></li>
+        <li class="cs-step" data-step="4"><span class="cs-step__n">05</span><div><h4>Утренняя сводка</h4><p>Каждое утро — план на день: кто, во сколько и сколько времени у ученика. И подсказка, у кого заканчиваются оплаченные занятия.</p></div></li>
+        <li class="cs-step" data-step="5"><span class="cs-step__n">06</span><div><h4>Расписание у репетитора</h4><p>Все занятия дня на одном экране: время ученика, статус и его ответ. Прошедшие занятия бот просит отметить — одно касание, и занятие списано.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="cs-info">
+    <div class="cs-head">
+      <span class="cs-kicker">Инфографика</span>
+      <h3 class="cs-h3" data-split>Что происходит вокруг одного урока</h3>
+      <p class="cs-sub" data-reveal>Всё это бот делает сам, репетитору ничего нажимать не нужно.</p>
+    </div>
+    <ol class="timeline" data-timeline>
+      <li><span class="timeline__dot"></span><b>−48 ч</b><p>Напоминание о домашке</p></li>
+      <li><span class="timeline__dot"></span><b>−24 ч</b><p>Напоминание о занятии: ученик отвечает «Буду» или «Не смогу». И ещё одно — о домашке</p></li>
+      <li><span class="timeline__dot"></span><b>−1 ч</b><p>Ещё одно напоминание о занятии</p></li>
+      <li><span class="timeline__dot"></span><b>−15 мин</b><p>В кабинете ученика загорается кнопка «Подключиться»</p></li>
+      <li><span class="timeline__dot"></span><b>−10 мин</b><p>Последнее напоминание — со ссылкой на Zoom</p></li>
+      <li class="is-main"><span class="timeline__dot"></span><b>Урок</b><p>Занятие в Zoom</p></li>
+      <li><span class="timeline__dot"></span><b>После</b><p>Бот спрашивает репетитора, как прошло занятие. Одно касание — и оно списано с баланса</p></li>
+    </ol>
+    <p class="cs-note" data-reveal>Напоминания о домашке приходят, если в этот день у ученика есть занятие. Каждое напоминание репетитор может включить или выключить в настройках.</p>
+  </section>
+
+  <section class="cs-features">
+    <div class="cs-feat" data-reveal>
+      <h4>Для репетитора</h4>
+      <ul>
+        <li>Расписание, в том числе серии «каждую неделю» — с проверкой пересечений</li>
+        <li>Карточка каждого ученика: занятия, баланс, домашка</li>
+        <li>Оплаты по СБП: подтвердить — одно касание</li>
+        <li>Рассылка сообщений ученикам</li>
+        <li>Утренняя сводка и настройки напоминаний</li>
+      </ul>
+    </div>
+    <div class="cs-feat" data-reveal>
+      <h4>Для ученика</h4>
+      <ul>
+        <li>Ближайшее занятие и кнопка «Подключиться» к Zoom</li>
+        <li>Ответ «Буду» или «Не смогу» в один тап</li>
+        <li>Домашние задания и их история</li>
+        <li>Баланс занятий и оплата</li>
+        <li>Время занятий — в своём часовом поясе</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ОТЗЫВЫ: настоящие сообщения из Telegram, перенесены текстом (эмодзи — картинки Apple) -->
+  <section class="cs-reviews">
+    <div class="cs-head"><span class="cs-kicker">Отзывы</span><h3 class="cs-h3" data-split>Что говорят репетитор, ученица и&nbsp;родители</h3></div>
+    <div class="msg-grid msg-grid--tutor">
+      <figure class="msg-card msg-card--main" data-review-id="anna" data-reveal>
+        <figcaption class="msg-card__head">
+          <span class="msg-card__ava">А</span>
+          <span class="msg-card__who"><b>Анна Евгеньевна</b><small>репетитор, пользуется приложением</small></span>
+          <span class="msg-card__src"><svg width="13" height="13"><use href="#icon-send"/></svg>Telegram</span>
+        </figcaption>
+        <div class="msg-card__chat">
+          <div class="bubble is-last"><p>Я вообще в восторге <img class="emoji" src="assets/emoji/1f929.png" alt="🤩"> Раньше вручную вела учёт абонементов и напоминала ученикам о занятии, а сейчас уведомления детям и родителям приходят автоматически. И мне теперь не нужно, как попрошайке, писать родителям, чтобы скинули деньги за урок, — за меня это делает бот <img class="emoji" src="assets/emoji/1f605.png" alt="😅"> Да и вообще, стало очень удобно отслеживать финансы.</p><p>Особенно порадовала функция с расписанием, где можно без накладок переносить учеников: из-за разных часовых поясов я могла запутаться и случайно записать двоих на одно время. Приложение просто не даёт мне записать ученика на то время, на которое уже кто-то записан.</p><p>Спасибо большое за проделанную работу <img class="emoji" src="assets/emoji/1f970.png" alt="🥰"><time>15:13</time></p></div>
+        </div>
+      </figure>
+      <div class="msg-grid__side">
+        <figure class="msg-card" data-review-id="student" data-reveal>
+          <figcaption class="msg-card__head">
+            <span class="msg-card__ava msg-card__ava--icon"><svg width="18" height="18"><use href="#icon-user"/></svg></span>
+            <span class="msg-card__who"><b>Ученица</b><small>пользуется ботом</small></span>
+          </figcaption>
+          <div class="msg-card__chat">
+            <div class="bubble"><span class="bubble__reply"><b>Репетитор</b>Можешь присоединиться?</span><p>Да, хорошо<time>15:02</time></p></div>
+            <div class="bubble is-last"><p>Интерфейс приятный <img class="emoji emoji--sticker" src="assets/emoji/cat-sticker.png" alt="🐱"><time>15:03</time></p></div>
+          </div>
+        </figure>
+        <figure class="msg-card" data-review-id="parent-1" data-reveal>
+          <figcaption class="msg-card__head">
+            <span class="msg-card__ava msg-card__ava--icon"><svg width="18" height="18"><use href="#icon-user"/></svg></span>
+            <span class="msg-card__who"><b>Родитель ученика</b><small>получает уведомления от бота</small></span>
+          </figcaption>
+          <div class="msg-card__chat">
+            <div class="bubble is-last"><p>Доброе утро! Как это удобно, благодарю. Ощущаю себя старой в такие моменты <img class="emoji" src="assets/emoji/1f605.png" alt="😅"><time>15:02</time></p></div>
+          </div>
+        </figure>
+        <figure class="msg-card" data-review-id="parent-2" data-reveal>
+          <figcaption class="msg-card__head">
+            <span class="msg-card__ava msg-card__ava--icon"><svg width="18" height="18"><use href="#icon-user"/></svg></span>
+            <span class="msg-card__who"><b>Родитель ученика</b><small>получает уведомления от бота</small></span>
+          </figcaption>
+          <div class="msg-card__chat">
+            <div class="bubble is-last"><p>Добрый день! Да, всё увидела, спасибо. Очень удобно<time>19:22</time></p></div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-cta" data-reveal>
+    <div>
+      <h3>Есть задача, которая съедает время?</h3>
+      <p>Расскажите, что вы каждый день делаете вручную. Подскажу, что из этого можно отдать боту.</p>
+    </div>
+    <a class="btn-primary" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer"><svg width="17" height="17"><use href="#icon-send"/></svg>Обсудить задачу</a>
+  </section>
+</template>
+
+<!-- КЕЙС: КАРТА ДНЯ DBT (имя клиентки не указываем — это личная информация) -->
+<template id="case-dbt" data-case="dbt" data-title="Карта дня DBT" data-sub="Telegram Mini App" data-next="flyguru">
+  <header class="cs-hero">
+    <div class="case-tags" data-reveal><span class="case-tag">Telegram Mini App</span><span class="case-tag case-tag--auto">Автоматизация</span></div>
+    <h2 class="cs-title" data-split>Карта дня, которую <span class="c-accent">не&nbsp;забудешь</span> заполнить</h2>
+    <p class="cs-lead" data-reveal>Моя клиентка проходит курс DBT — диалектико-поведенческой терапии. Каждый день нужно заполнять «Карту дня»: как спала, какое было самочувствие, какие навыки получилось применить. В конце недели карту показывают терапевту.</p>
+    <dl class="cs-meta" data-reveal>
+      <div><dt>Клиент</dt><dd>Частный заказ</dd></div>
+      <div><dt>Что сделал</dt><dd>Мини-приложение и бот</dd></div>
+      <div><dt>Где работает</dt><dd>Внутри Telegram</dd></div>
+      <div><dt>Когда</dt><dd>Сентябрь 2026</dd></div>
+    </dl>
+  </header>
+
+  <section class="cs-stats">
+    <div class="cs-stat" data-reveal><b>21:00</b><span>каждый вечер бот напоминает заполнить карту</span></div>
+    <div class="cs-stat" data-reveal><b data-count="3">3</b><span>вкладки — день, навыки, неделя</span></div>
+    <div class="cs-stat" data-reveal><b data-count="1">1</b><span>кнопка — и PDF за неделю готов</span></div>
+    <div class="cs-stat" data-reveal><b data-count="0">0</b><span>ответов хранится на сервере</span></div>
+  </section>
+
+  <section class="cs-ps">
+    <div class="cs-ps__card" data-reveal>
+      <span class="cs-kicker">Задача</span>
+      <p>Карта была бумажной: её нужно распечатать, носить с собой, не потерять и вечером не забыть заполнить. Клиентка часто про неё забывала.</p>
+    </div>
+    <div class="cs-ps__card cs-ps__card--solution" data-reveal>
+      <span class="cs-kicker">Решение</span>
+      <p>Я перенёс бланк в Telegram и добавил бота-напоминалку. Каждый вечер приходит сообщение, карта открывается в один тап, ответы сохраняются сами — даже если закрыть на середине. В конце недели бот собирает PDF, который выглядит как бумажный бланк.</p>
+    </div>
+  </section>
+
+  <section class="cs-how">
+    <div class="cs-head">
+      <span class="cs-kicker">Как это работает</span>
+      <h3 class="cs-h3" data-split>Листайте экраны — как&nbsp;в&nbsp;телефоне</h3>
+    </div>
+    <div class="cs-how__grid">
+      <div class="cs-how__stage">
+        <div class="gallery" data-gallery data-shots>
+          <div class="iphone iphone--lg">
+            <div class="iphone__screen">
+              <div class="iphone__track" data-track>
+                <!-- Экраны сняты с демо-неделей; раздел «Старый путь» в кадр не попадает -->
+                <figure class="slide"><img class="shot-l" src="assets/cases/dbt/bot-light.webp" alt="Бот напоминает заполнить карту дня"><img class="shot-d" src="assets/cases/dbt/bot-dark.webp" alt="Бот напоминает заполнить карту дня"></figure>
+                <figure class="slide"><img class="shot-l" src="assets/cases/dbt/day-light.webp" alt="Вкладка «День»" loading="lazy"><img class="shot-d" src="assets/cases/dbt/day-dark.webp" alt="Вкладка «День»" loading="lazy"></figure>
+                <figure class="slide"><img class="shot-l" src="assets/cases/dbt/day2-light.webp" alt="Сон и самочувствие" loading="lazy"><img class="shot-d" src="assets/cases/dbt/day2-dark.webp" alt="Сон и самочувствие" loading="lazy"></figure>
+                <figure class="slide"><img class="shot-l" src="assets/cases/dbt/skills-light.webp" alt="Вкладка «Навыки»" loading="lazy"><img class="shot-d" src="assets/cases/dbt/skills-dark.webp" alt="Вкладка «Навыки»" loading="lazy"></figure>
+                <figure class="slide"><img class="shot-l" src="assets/cases/dbt/reminder-light.webp" alt="Настройка напоминания" loading="lazy"><img class="shot-d" src="assets/cases/dbt/reminder-dark.webp" alt="Настройка напоминания" loading="lazy"></figure>
+                <figure class="slide"><img class="shot-l" src="assets/cases/dbt/week-light.webp" alt="Вкладка «Неделя»" loading="lazy"><img class="shot-d" src="assets/cases/dbt/week-dark.webp" alt="Вкладка «Неделя»" loading="lazy"></figure>
+                <figure class="slide"><img class="shot-l" src="assets/cases/dbt/week2-light.webp" alt="Итоги недели по дням" loading="lazy"><img class="shot-d" src="assets/cases/dbt/week2-dark.webp" alt="Итоги недели по дням" loading="lazy"></figure>
+              </div>
+            </div>
+            <span class="iphone__island"></span>
+          </div>
+        </div>
+      </div>
+      <ol class="cs-steps">
+        <li class="cs-step" data-step="0"><span class="cs-step__n">01</span><div><h4>Бот напоминает каждый вечер</h4><p>В 21:00 приходит сообщение с кнопкой — карта открывается в один тап. Сюда же в конце недели приходит PDF.</p></div></li>
+        <li class="cs-step" data-step="1"><span class="cs-step__n">02</span><div><h4>Весь день на одном экране</h4><p>Сверху — неделя и прогресс: сколько пунктов из 24 уже заполнено. Всё сохраняется само.</p></div></li>
+        <li class="cs-step" data-step="2"><span class="cs-step__n">03</span><div><h4>Шкалы вместо длинных ответов</h4><p>Большинство пунктов — это шкала от 0 до 5 или счётчик. Отметить — одно касание.</p></div></li>
+        <li class="cs-step" data-step="3"><span class="cs-step__n">04</span><div><h4>Навыки дня</h4><p>Отдельная вкладка, чтобы отметить навыки, над которыми получилось поработать.</p></div></li>
+        <li class="cs-step" data-step="4"><span class="cs-step__n">05</span><div><h4>Напоминание — когда удобно</h4><p>По умолчанию в 21:00. Время меняется прямо в приложении, по часовому поясу телефона.</p></div></li>
+        <li class="cs-step" data-step="5"><span class="cs-step__n">06</span><div><h4>Карта недели — одной кнопкой</h4><p>Бот присылает PDF в виде бланка: его можно переслать терапевту или распечатать.</p></div></li>
+        <li class="cs-step" data-step="6"><span class="cs-step__n">07</span><div><h4>Неделя по дням</h4><p>Сон, самочувствие и навыки — наглядно, по каждому дню недели.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="cs-info">
+    <div class="cs-head">
+      <span class="cs-kicker">Инфографика</span>
+      <h3 class="cs-h3" data-split>Один день с картой</h3>
+      <p class="cs-sub" data-reveal>Цикл повторяется каждый день, а в конце недели превращается в готовый бланк.</p>
+    </div>
+    <ol class="flow" data-timeline>
+      <li><span class="flow__icon"><svg width="22" height="22"><use href="#icon-bell"/></svg></span><b>21:00</b><p>Бот напоминает заполнить карту</p></li>
+      <li><span class="flow__icon"><svg width="22" height="22"><use href="#icon-send"/></svg></span><b>1 тап</b><p>Карта открывается прямо из сообщения</p></li>
+      <li><span class="flow__icon"><svg width="22" height="22"><use href="#icon-check"/></svg></span><b>24 пункта</b><p>Шкалы, счётчики и короткие ответы</p></li>
+      <li><span class="flow__icon"><svg width="22" height="22"><use href="#icon-loop"/></svg></span><b>× 7 дней</b><p>Ответы сохраняются сами, день за днём</p></li>
+      <li class="is-main"><span class="flow__icon"><svg width="22" height="22"><use href="#icon-file"/></svg></span><b>PDF</b><p>Готовый бланк недели — для терапевта</p></li>
+    </ol>
+  </section>
+
+  <section class="cs-privacy" data-reveal>
+    <span class="cs-privacy__icon"><svg width="26" height="26"><use href="#icon-lock"/></svg></span>
+    <div>
+      <h4>Про приватность</h4>
+      <p>Ответы хранятся в облаке Telegram у самой клиентки, а не на моём сервере. Сервер видит их только в момент, когда собирает PDF, и ничего не сохраняет. Пользоваться ботом могут только те, кому открыт доступ.</p>
+    </div>
+  </section>
+
+  <!-- ОТЗЫВ: без имени — участие в терапии относится к личной информации -->
+  <section class="cs-reviews">
+    <div class="cs-head"><span class="cs-kicker">Отзыв</span><h3 class="cs-h3" data-split>Что говорит клиентка</h3></div>
+    <div class="msg-grid">
+      <figure class="msg-card msg-card--main" data-review-id="client" data-reveal>
+        <figcaption class="msg-card__head">
+          <span class="msg-card__ava msg-card__ava--icon"><svg width="18" height="18"><use href="#icon-lock"/></svg></span>
+          <span class="msg-card__who"><b>Имя скрыто</b><small>клиентка, заполняет карту дня</small></span>
+          <span class="msg-card__src"><svg width="13" height="13"><use href="#icon-send"/></svg>Telegram</span>
+        </figcaption>
+        <div class="msg-card__chat">
+          <div class="bubble is-last"><p>Мне всегда было лень заполнять карту дня, потому что её надо распечатать, достать, всё вручную заполнить. Если она потеряется, это вообще треш полный: я уже и не вспомню, что там было в начале недели. И что в итоге мне психологу отправлять? Теперь у меня всё в телефоне и всегда под рукой. А если я забуду о карте дня, мне придёт напоминалка. Это существенно упростило мне процесс психотерапии.</p><p>Это вообще стало похоже на игру, где надо потыкать кнопочки, и ты сразу получишь результат. А как меня психолог похвалил, айай <img class="emoji" src="assets/emoji/1f602.png" alt="😂"> Я в его глазах теперь крутая ответственная личность, которая ежедневно заполняет карту дня и не забивает на эту рутину. В общем, это мини-приложение — реально крутая вещь, очень упрощает мне жизнь<time>15:22</time></p></div>
+        </div>
+        <p class="msg-card__note"><svg width="15" height="15"><use href="#icon-lock"/></svg>Имя автора не раскрывается в целях конфиденциальности: сведения об участии в терапевтической программе относятся к личной информации.</p>
+      </figure>
+    </div>
+  </section>
+
+  <section class="cs-cta" data-reveal>
+    <div>
+      <h3>Нужно, чтобы важное не забывалось?</h3>
+      <p>Бланк, чек-лист, дневник или таблицу можно перенести в Telegram. Бот будет напоминать о них в нужное время.</p>
+    </div>
+    <a class="btn-primary" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer"><svg width="17" height="17"><use href="#icon-send"/></svg>Обсудить задачу</a>
+  </section>
+</template>
+
+<!-- КЕЙС: FLYGURU -->
+<template id="case-flyguru" data-case="flyguru" data-title="FlyGuru" data-sub="SMM и дизайн" data-next="nhatrang">
+  <header class="cs-hero">
+    <div class="case-tags" data-reveal><span class="case-tag">SMM</span><span class="case-tag">Дизайн</span></div>
+    <h2 class="cs-title" data-split>Соцсети <span class="c-accent">FlyGuru</span></h2>
+    <p class="cs-lead" data-reveal>Я работал SMM-специалистом в FlyGuru, школе катания на электрофойлах в Нячанге. Делал Reels для ленты и рекламные креативы. Для пляжа — баннеры и карточку с QR-кодами, для профиля — сторис с прайсом для «Актуального». И ещё дизайн лайкры с символикой школы.</p>
+    <dl class="cs-meta" data-reveal>
+      <div><dt>Проект</dt><dd>Школа электрофойлов, Нячанг</dd></div>
+      <div><dt>Моя роль</dt><dd>SMM и дизайн</dd></div>
+      <div><dt>Что делал</dt><dd>Reels, креативы, печать, мерч</dd></div>
+      <div><dt>Площадка</dt><dd>Instagram</dd></div>
+    </dl>
+  </header>
+
+  <!-- Цифры — из статистики Instagram за 90 дней: 3 июля — 30 сентября 2026 (скрины ниже) -->
+  <section class="cs-stats-wrap">
+  <div class="cs-stats">
+    <div class="cs-stat" data-reveal><b><span data-count="388">388</span><small> тыс.</small></b><span>просмотров за 90 дней — точнее, 388 054</span></div>
+    <div class="cs-stat" data-reveal><b><span data-count="181">181</span><small> тыс.</small></b><span>просмотров у Reels — больше, чем у сторис и постов</span></div>
+    <div class="cs-stat" data-reveal><b><span data-count="111.2">111,2</span><small> тыс.</small></b><span>у самого популярного ролика</span></div>
+    <div class="cs-stat" data-reveal><b><span data-count="302" data-prefix="+">+302</span></b><span>подписчика за 90 дней</span></div>
+  </div>
+  <p class="cs-note">Цифры — из статистики Instagram за 90 дней: с 3 июля по 30 сентября 2026. Скрины — ниже.</p>
+  </section>
+
+  <!-- REELS: видео без звука на экране; по нажатию — открывается крупно, со звуком -->
+  <section class="cs-how">
+    <div class="cs-head">
+      <span class="cs-kicker">Reels — для ленты</span>
+      <h3 class="cs-h3" data-split>Листайте — как&nbsp;в&nbsp;ленте</h3>
+      <p class="cs-sub" data-reveal>Ролики с пляжа: полёты и разговоры на камеру. В первую секунду — крупная фраза, дальше субтитры, чтобы смотрели даже без звука. Нажмите на видео, чтобы открыть его со звуком.</p>
+    </div>
+    <div class="cs-how__grid">
+      <div class="cs-how__stage">
+        <div class="gallery" data-gallery data-videos>
+          <div class="iphone iphone--lg">
+            <div class="iphone__screen">
+              <div class="iphone__track" data-track>
+                <figure class="slide slide--video"><video data-src="assets/cases/flyguru/reels-1.mp4" poster="assets/cases/flyguru/reels-1.jpg" muted loop playsinline preload="none" aria-label="Reels «Обогнал яхту на e-foil»"></video><span class="video-tag">Reels</span></figure>
+                <figure class="slide slide--video"><video data-src="assets/cases/flyguru/reels-2.mp4" poster="assets/cases/flyguru/reels-2.jpg" muted loop playsinline preload="none" aria-label="Reels с инструктором"></video><span class="video-tag">Reels</span></figure>
+                <figure class="slide slide--video"><video data-src="assets/cases/flyguru/reels-3.mp4" poster="assets/cases/flyguru/reels-3.jpg" muted loop playsinline preload="none" aria-label="Reels — знакомство на камеру"></video><span class="video-tag">Reels</span></figure>
+                <figure class="slide slide--video"><video data-src="assets/cases/flyguru/reels-4.mp4" poster="assets/cases/flyguru/reels-4.jpg" muted loop playsinline preload="none" aria-label="Reels с круизным лайнером"></video><span class="video-tag">Reels</span></figure>
+              </div>
+            </div>
+            <span class="iphone__island"></span>
+          </div>
+        </div>
+      </div>
+      <ol class="cs-steps">
+        <li class="cs-step" data-step="0"><span class="cs-step__n">01</span><div><h4>«Обогнал яхту на e-foil»</h4><p>Полёт над морем наперегонки с яхтой. Самый просматриваемый ролик за 90 дней — 111,2 тыс. просмотров.</p></div></li>
+        <li class="cs-step" data-step="1"><span class="cs-step__n">02</span><div><h4>«Знаете, какая…»</h4><p>Инструктор у доски говорит на камеру — крупная фраза-хук и субтитры, чтобы досмотрели даже без звука.</p></div></li>
+        <li class="cs-step" data-step="2"><span class="cs-step__n">03</span><div><h4>«Меня зовут Джейсон»</h4><p>Знакомство на камеру на фоне моря — живой разговорный формат.</p></div></li>
+        <li class="cs-step" data-step="3"><span class="cs-step__n">04</span><div><h4>«Электро…»</h4><p>Электрофойл рядом с круизным лайнером, а дальше — разговор на камеру.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- КРЕАТИВЫ: ролики для рекламы -->
+  <section class="cs-how">
+    <div class="cs-head">
+      <span class="cs-kicker">Креативы — для рекламы</span>
+      <h3 class="cs-h3" data-split>Ролики, которые зовут записаться</h3>
+      <p class="cs-sub" data-reveal>Короткие видео для рекламы в Instagram. Задача у всех одна: показать доску и место и позвать на первый полёт.</p>
+    </div>
+    <div class="cs-how__grid">
+      <div class="cs-how__stage">
+        <div class="gallery" data-gallery data-videos>
+          <div class="iphone iphone--lg">
+            <div class="iphone__screen">
+              <div class="iphone__track" data-track>
+                <figure class="slide slide--video"><video data-src="assets/cases/flyguru/creative-1.mp4" poster="assets/cases/flyguru/creative-1.jpg" muted loop playsinline preload="none" aria-label="Креатив «Знакомьтесь — EFOIL»"></video><span class="video-tag video-tag--ad">Креатив</span></figure>
+                <figure class="slide slide--video"><video data-src="assets/cases/flyguru/creative-2.mp4" poster="assets/cases/flyguru/creative-2.jpg" muted loop playsinline preload="none" aria-label="Креатив «Пока Нячанг спит»"></video><span class="video-tag video-tag--ad">Креатив</span></figure>
+                <figure class="slide slide--video"><video data-src="assets/cases/flyguru/creative-3.mp4" poster="assets/cases/flyguru/creative-3.jpg" muted loop playsinline preload="none" aria-label="Креатив «А ты уже летал над…»"></video><span class="video-tag video-tag--ad">Креатив</span></figure>
+                <figure class="slide slide--video"><video data-src="assets/cases/flyguru/creative-4.mp4" poster="assets/cases/flyguru/creative-4.jpg" muted loop playsinline preload="none" aria-label="Креатив «Научим летать за 60 минут»"></video><span class="video-tag video-tag--ad">Креатив</span></figure>
+              </div>
+            </div>
+            <span class="iphone__island"></span>
+          </div>
+        </div>
+      </div>
+      <ol class="cs-steps">
+        <li class="cs-step" data-step="0"><span class="cs-step__n">01</span><div><h4>«Знакомьтесь — EFOIL»</h4><p>Что такое электрофойл — показываем с первых секунд.</p></div></li>
+        <li class="cs-step" data-step="1"><span class="cs-step__n">02</span><div><h4>«Пока Нячанг спит…»</h4><p>Полёт на рассвете — ролик про утренние катания.</p></div></li>
+        <li class="cs-step" data-step="2"><span class="cs-step__n">03</span><div><h4>«А ты уже летал над…»</h4><p>Эффект «маленькой планеты» и пляж Marina, где проходят полёты.</p></div></li>
+        <li class="cs-step" data-step="3"><span class="cs-step__n">04</span><div><h4>«Научим летать за 60 минут»</h4><p>Короткий ролик с одним призывом — «Запись в Direct».</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- СТАТИСТИКА: скрины в рамках одного размера, по нажатию — крупно -->
+  <section class="cs-statgal">
+    <div class="cs-head">
+      <span class="cs-kicker">Статистика</span>
+      <h3 class="cs-h3" data-split>Что показывает Instagram</h3>
+      <p class="cs-sub" data-reveal>Скрины из статистики аккаунта за 90 дней: с 3 июля по 30 сентября 2026. Нажмите на скрин, чтобы открыть крупно.</p>
+    </div>
+    <div class="statgal">
+      <div class="gallery gallery--stats" data-gallery data-statgal>
+        <div class="stat-frame">
+          <div class="iphone__track" data-track>
+            <figure class="slide"><img src="assets/cases/flyguru/stats-1.webp" alt="Весь контент за 90 дней: 388 054 просмотра, +302 подписчика" data-zoom></figure>
+            <figure class="slide"><img src="assets/cases/flyguru/stats-2.webp" alt="Просмотры по типу контента" data-zoom loading="lazy"></figure>
+            <figure class="slide"><img src="assets/cases/flyguru/stats-3.webp" alt="Самые просматриваемые публикации" data-zoom loading="lazy"></figure>
+            <figure class="slide"><img src="assets/cases/flyguru/stats-4.webp" alt="Статистика ролика «Обогнал яхту на e-foil»" data-zoom loading="lazy"></figure>
+            <figure class="slide"><img src="assets/cases/flyguru/stats-5.webp" alt="Статистика ролика «Пока Нячанг спит — ты уже летишь!», 21 июля" data-zoom loading="lazy"></figure>
+            <figure class="slide"><img src="assets/cases/flyguru/stats-6.webp" alt="Статистика ролика «Efoil — это электрическая доска»" data-zoom loading="lazy"></figure>
+            <figure class="slide"><img src="assets/cases/flyguru/stats-7.webp" alt="Статистика ролика «Пока Нячанг спит — ты уже летишь!», 7 июля" data-zoom loading="lazy"></figure>
+          </div>
+        </div>
+      </div>
+      <ol class="statgal__list">
+        <li><button type="button"><b>Весь контент за 90 дней</b><span>388 054 просмотра и +302 подписчика</span></button></li>
+        <li><button type="button"><b>Просмотры по типу контента</b><span>Reels — 181 тыс., сторис — 17 тыс., посты — 3,3 тыс.</span></button></li>
+        <li><button type="button"><b>Самые просматриваемые публикации</b><span>На первом месте — «Обогнал яхту на e-foil»</span></button></li>
+        <li><button type="button"><b>«Обогнал яхту на e-foil»</b><span>111 208 просмотров, 96 537 зрителей, 136 подписок</span></button></li>
+        <li><button type="button"><b>«Пока Нячанг спит — ты уже летишь!»</b><span>81 067 просмотров · 21 июля</span></button></li>
+        <li><button type="button"><b>«Efoil — это электрическая доска»</b><span>67 493 просмотра · 31 августа</span></button></li>
+        <li><button type="button"><b>«Пока Нячанг спит — ты уже летишь!»</b><span>29 568 просмотров и 6 часов просмотра · 7 июля</span></button></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ПЕЧАТЬ ДЛЯ ПЛЯЖА -->
+  <section class="cs-print">
+    <div class="cs-head">
+      <span class="cs-kicker">Для пляжа</span>
+      <h3 class="cs-h3" data-split>То, что видят вживую</h3>
+      <p class="cs-sub" data-reveal>Баннеры для пляжа и карточка с QR-кодами: Instagram, Telegram и Google Maps — чтобы после полёта легко найти школу и оставить отзыв.</p>
+    </div>
+    <div class="cs-print__grid cs-print__grid--fg">
+      <button class="tile tile--tall" type="button" data-lightbox="assets/cases/flyguru/banner.webp" data-reveal><img src="assets/cases/flyguru/banner.webp" alt="Вертикальный баннер для пляжа" loading="lazy"><span class="tile__cap">Баннер на пляж</span></button>
+      <button class="tile tile--wide" type="button" data-lightbox="assets/cases/flyguru/banner-a3.webp" data-reveal><img src="assets/cases/flyguru/banner-a3.webp" alt="Баннер формата A3" loading="lazy"><span class="tile__cap">Баннер A3</span></button>
+      <button class="tile tile--wide" type="button" data-lightbox="assets/cases/flyguru/qr-card.webp" data-reveal><img src="assets/cases/flyguru/qr-card.webp" alt="Карточка с QR-кодами" loading="lazy"><span class="tile__cap">Карточка с QR-кодом</span></button>
+    </div>
+  </section>
+
+  <!-- СТОРИС ДЛЯ АКТУАЛЬНОГО -->
+  <section class="cs-stories">
+    <div class="cs-head">
+      <span class="cs-kicker">Сторис для «Актуального»</span>
+      <h3 class="cs-h3" data-split>Прайс и запись — прямо в&nbsp;профиле</h3>
+      <p class="cs-sub" data-reveal>Две сторис для закреплённых «Актуальных»: прайс-лист и приглашение записаться на первый полёт.</p>
+    </div>
+    <div class="story-row">
+      <button class="story-card" type="button" data-lightbox="assets/cases/flyguru/story-price.webp" data-reveal><img src="assets/cases/flyguru/story-price.webp" alt="Сторис с прайс-листом" loading="lazy"><span class="story-card__bar" aria-hidden="true"><i class="is-on"></i><i></i></span></button>
+      <button class="story-card" type="button" data-lightbox="assets/cases/flyguru/story-direct.webp" data-reveal><img src="assets/cases/flyguru/story-direct.webp" alt="Сторис «Запись на первый полёт — в Direct»" loading="lazy"><span class="story-card__bar" aria-hidden="true"><i class="is-on"></i><i class="is-on"></i></span></button>
+    </div>
+  </section>
+
+  <!-- МЕРЧ -->
+  <section class="cs-merch">
+    <div class="cs-head">
+      <span class="cs-kicker">Мерч</span>
+      <h3 class="cs-h3" data-split>Лайкра <span class="c-accent">E-FOIL RIDER</span></h3>
+      <p class="cs-sub" data-reveal>Дизайн лайкры с символикой школы: макет спереди и сзади — и то, как она сидит на фигуре.</p>
+    </div>
+    <div class="merch-grid">
+      <button class="merch-card" type="button" data-lightbox="assets/cases/flyguru/lycra.webp" data-reveal><img src="assets/cases/flyguru/lycra.webp" alt="Макет лайкры: спереди и сзади" loading="lazy"><span class="tile__cap">Макет: спереди и сзади</span></button>
+      <button class="merch-card" type="button" data-lightbox="assets/cases/flyguru/lycra-fit.webp" data-reveal><img src="assets/cases/flyguru/lycra-fit.webp" alt="Лайкра на фигуре: спереди, сбоку и сзади" loading="lazy"><span class="tile__cap">Как сидит на фигуре</span></button>
+    </div>
+  </section>
+
+  <section class="cs-cta" data-reveal>
+    <div>
+      <h3>Нужен человек на соцсети или визуал?</h3>
+      <p>Напишите, чем вы занимаетесь. Обсудим, какой контент вам нужен и сколько это будет стоить.</p>
+    </div>
+    <a class="btn-primary" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer"><svg width="17" height="17"><use href="#icon-send"/></svg>Обсудить проект</a>
+  </section>
+</template>
+
+<!-- КЕЙС: НЯЧАНГGO — логотип и флаер -->
+<template id="case-nhatrang" data-case="nhatrang" data-title="НячангGO" data-sub="Логотип и флаер" data-next="tutor">
+  <header class="cs-hero">
+    <div class="case-tags" data-reveal><span class="case-tag">Логотип</span><span class="case-tag">Полиграфия</span></div>
+    <h2 class="cs-title" data-split>Логотип и флаер для <span class="c-accent">НячангGO</span></h2>
+    <p class="cs-lead" data-reveal>НячангGO — сообщество авторских путешествий в Нячанге: острова и водопады, походы в горы, рассветы на SUP. Для них я сделал два варианта логотипа и складной флаер — его раздают новым клиентам и туристам.</p>
+    <dl class="cs-meta" data-reveal>
+      <div><dt>Клиент</dt><dd>Сообщество путешествий, Нячанг</dd></div>
+      <div><dt>Что сделал</dt><dd>Логотип и флаер</dd></div>
+      <div><dt>Логотип</dt><dd>Два варианта</dd></div>
+      <div><dt>Флаер</dt><dd>Складной, для печати</dd></div>
+    </dl>
+  </header>
+
+  <!-- ЛОГОТИП: окно «фоторедактора» с двумя вариантами на холсте -->
+  <section class="cs-logo">
+    <div class="cs-head">
+      <span class="cs-kicker">Логотип</span>
+      <h3 class="cs-h3" data-split>Два варианта логотипа</h3>
+      <p class="cs-sub" data-reveal>Полная надпись «НЯЧАНГGO» и короткий знак «GO» — второй удобен там, где мало места. Жёлтый «GO» — главный акцент в обоих. Нажмите на вариант или на слой справа, чтобы выделить его.</p>
+    </div>
+    <div class="editor editor--lg" data-editor data-reveal>
+      <span class="editor__bar"><i></i><i></i><i></i><b>НячангGO — логотип</b><em class="editor__zoom">100%</em></span>
+      <div class="editor__menu" aria-hidden="true"><span>Файл</span><span>Редактирование</span><span>Изображение</span><span>Слои</span><span>Текст</span><span>Окно</span></div>
+      <div class="editor__body">
+        <span class="editor__tools" aria-hidden="true">
+          <svg class="is-active"><use href="#icon-tool-move"/></svg><svg><use href="#icon-tool-marquee"/></svg><svg><use href="#icon-tool-pen"/></svg><svg><use href="#icon-tool-type"/></svg><svg><use href="#icon-tool-shape"/></svg><svg><use href="#icon-tool-hand"/></svg>
+        </span>
+        <div class="editor__canvas">
+          <button class="artboard is-active" type="button" data-artboard="0" aria-pressed="true"><span class="artboard__name">Вариант 1 — надпись</span><img src="assets/cases/nhatrang/logo-full.webp" alt="Логотип НячангGO — полная надпись"></button>
+          <button class="artboard artboard--mark" type="button" data-artboard="1" aria-pressed="false"><span class="artboard__name">Вариант 2 — знак</span><img src="assets/cases/nhatrang/logo-go.webp" alt="Логотип НячангGO — знак GO"></button>
+        </div>
+        <aside class="editor__panel" aria-hidden="true">
+          <b class="editor__ptitle">Слои</b>
+          <ul class="editor__layers">
+            <li class="is-active" data-layer="0"><svg><use href="#icon-eye"/></svg><span class="editor__thumb editor__thumb--full"></span>НЯЧАНГGO</li>
+            <li data-layer="1"><svg><use href="#icon-eye"/></svg><span class="editor__thumb editor__thumb--mark"></span>GO</li>
+            <li><svg><use href="#icon-eye"/></svg><span class="editor__thumb editor__thumb--bg"></span>Фон</li>
+          </ul>
+          <b class="editor__ptitle">Цвета</b>
+          <div class="editor__swatches">
+            <span><i style="background:#ffd900"></i>#FFD900</span>
+            <span><i style="background:#ffffff"></i>#FFFFFF</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ФЛАЕР: переворачивается по нажатию -->
+  <section class="cs-flyer">
+    <div class="cs-head">
+      <span class="cs-kicker">Флаер</span>
+      <h3 class="cs-h3" data-split>Флаер, который раздают туристам</h3>
+      <p class="cs-sub" data-reveal>Складной флаер. Снаружи — обложка с логотипом, пара слов о сообществе и QR-коды на Instagram и Telegram. Внутри — направления поездок, что входит в стоимость, и скидка 10% на первую поездку.</p>
+    </div>
+    <div class="flyer" data-flyer data-reveal>
+      <div class="flyer__controls">
+        <div class="seg" role="group" aria-label="Сторона флаера">
+          <i class="seg__knob" aria-hidden="true"></i>
+          <button type="button" data-side="front" aria-pressed="true">Снаружи</button>
+          <button type="button" data-side="back" aria-pressed="false">Внутри</button>
+        </div>
+        <button class="flyer__zoom" type="button"><svg width="15" height="15"><use href="#icon-image"/></svg>Открыть крупно</button>
+      </div>
+      <button class="flyer__card" type="button" aria-label="Перевернуть флаер">
+        <span class="flyer__face flyer__face--front"><img src="assets/cases/nhatrang/flyer-outside.webp" alt="Флаер снаружи: обложка, о сообществе и QR-коды" loading="lazy"></span>
+        <span class="flyer__face flyer__face--back"><img src="assets/cases/nhatrang/flyer-inside.webp" alt="Флаер внутри: направления поездок и скидка 10%" loading="lazy"></span>
+      </button>
+      <p class="flyer__hint">Нажмите на флаер, чтобы перевернуть</p>
+    </div>
+  </section>
+
+  <!-- ФЛАЕР ВЖИВУЮ -->
+  <section class="cs-ng-photos">
+    <div class="cs-head">
+      <span class="cs-kicker">Вживую</span>
+      <h3 class="cs-h3" data-split>Так флаер выглядит в&nbsp;руках</h3>
+      <p class="cs-sub" data-reveal>Напечатанный флаер: обложка, сторона с QR-кодами и разворот.</p>
+    </div>
+    <div class="ng-photos">
+      <button class="tile" type="button" data-lightbox="assets/cases/nhatrang/photo-1.webp" data-reveal><img src="assets/cases/nhatrang/photo-1.webp" alt="Флаер НячангGO: обложка" loading="lazy"><span class="tile__cap">Обложка</span></button>
+      <button class="tile" type="button" data-lightbox="assets/cases/nhatrang/photo-2.webp" data-reveal><img src="assets/cases/nhatrang/photo-2.webp" alt="Флаер НячангGO: сторона с QR-кодами" loading="lazy"><span class="tile__cap">QR-коды</span></button>
+      <button class="tile" type="button" data-lightbox="assets/cases/nhatrang/photo-3.webp" data-reveal><img src="assets/cases/nhatrang/photo-3.webp" alt="Флаер НячангGO: разворот" loading="lazy"><span class="tile__cap">Разворот</span></button>
+    </div>
+  </section>
+
+  <!-- ОТЗЫВ: сообщения заказчика после того, как он увидел варианты логотипа -->
+  <section class="cs-reviews">
+    <div class="cs-head"><span class="cs-kicker">Отзыв</span><h3 class="cs-h3" data-split>Что сказал заказчик</h3></div>
+    <div class="msg-grid">
+      <figure class="msg-card msg-card--main" data-review-id="client" data-reveal>
+        <figcaption class="msg-card__head">
+          <span class="msg-card__ava msg-card__ava--logo"><img src="assets/cases/nhatrang/logo-go.webp" alt=""></span>
+          <span class="msg-card__who"><b>НячангGO</b><small>заказчик, принимал работу</small></span>
+          <span class="msg-card__src"><svg width="13" height="13"><use href="#icon-send"/></svg>Telegram</span>
+        </figcaption>
+        <div class="msg-card__chat">
+          <div class="bubble"><p>Но этот вариант тоже топ<time>12:25</time></p><span class="bubble__react"><img class="emoji" src="assets/emoji/2764-fe0f.png" alt="❤️"></span></div>
+          <div class="bubble"><p>От души <img class="emoji" src="assets/emoji/1f525.png" alt="🔥"><img class="emoji" src="assets/emoji/1f525.png" alt="🔥"><img class="emoji" src="assets/emoji/1f525.png" alt="🔥"><time>12:25</time></p></div>
+          <div class="bubble is-last"><p>Всё-таки офигенный мы с тобой логотип GO сделали <img class="emoji" src="assets/emoji/1f64c-1f3fe.png" alt="🙌🏾"><time>12:26</time></p></div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="cs-cta" data-reveal>
+    <div>
+      <h3>Нужен логотип или флаер?</h3>
+      <p>Расскажите о проекте. Сделаю логотип, флаер или другую полиграфию под ваш стиль.</p>
+    </div>
+    <a class="btn-primary" href="https://t.me/anyeffect1" target="_blank" rel="noopener noreferrer"><svg width="17" height="17"><use href="#icon-send"/></svg>Обсудить проект</a>
+  </section>
+</template>
+
+</body>
+</html>
